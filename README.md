@@ -29,7 +29,14 @@ Task("Start")
     .Description("Service Start.")
     .Does(() =>
 {
+	Information("---Configure the agent---");
+    ConfigureAgent(new AgentSettings()
+	{
+		Port = 8888,
 
+        EnableTerminationCheck = true,
+		EnableAPI = true
+	}.AddUser("Admin", "Password1"));
 });
 
 Task("Stop")
@@ -92,10 +99,11 @@ or directly in your build script via a cake addin:
 ```csharp
 #addin "Cake.CakeBoss"
 
-Task("Startup")
-    .Description("The build process on Machine1")
+Task("Deploy")
+    .Description("The deployment process on Machine1")
     .Does(() =>
 {
+    Information("---Call the agent API on another machine---");
     RunRemoteTarget(new RemoteSettings()
 	{
         Username = "Admin",
@@ -104,7 +112,7 @@ Task("Startup")
         Host = "Machine2"
         Port = 8888,
 
-        Target = "Remote"
+        Target = "Deploy"
 	});
 });
 ```
@@ -114,11 +122,11 @@ Task("Startup")
 ## API Usage (Machine2)
 
 ```csharp
-Task("Startup")
+Task("Start")
     .Description("Configures the API on Machine2")
     .Does(() =>
 {
-    Information("---Config Agent---");
+    Information("---Configure the agent API---");
 	ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -128,7 +136,7 @@ Task("Startup")
 	}.AddUser("Admin", "Password1"));
 });
 
-Task("Remote")
+Task("Deploy")
     .Description("Remote target on machine2")
     .Does(() =>
 {
