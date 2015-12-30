@@ -1,3 +1,6 @@
+### New in 0.0.9 (Released 2015/12/30)
+* Working AppVeyor & visual studio debugging build process
+
 ### New in 0.0.8 (Released 2015/12/30)
 * Override ScriptRunner to alter the location of the addin directory
 

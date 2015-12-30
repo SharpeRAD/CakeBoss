@@ -21,9 +21,9 @@ Task("Start")
     Information("---Start Agent---");
 	ConfigureAgent(new AgentSettings()
 	{
-		Port = 8080,
+		Port = 8888,
 
-        EnableTerminationCheck = true,
+        EnableTerminationCheck = false,
 		EnableAPI = true
 	}.AddUser("Admin", "Password1"));
            
@@ -34,7 +34,7 @@ Task("Start")
 	{
         Username = "Admin",
         Password = "Password1",
-        Port = 8080,
+        Port = 8888,
 
         Target = "Remote"
 	});

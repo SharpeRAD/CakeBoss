@@ -67,7 +67,7 @@ Task("Terminate")
 
 ## Agent API
 
-A Nancy based webservice enables remote calls from the "Cake.CakeBoss" nuget package, allowing a central machine to execute tasks on individual nodes. Should go without saying but please do NOT enabled the api on a public machine!
+A Nancy based api enables remote calls from the "Cake.CakeBoss" nuget package, allowing a central machine to execute tasks on individual nodes. Should go without saying but please do NOT enabled the api on a public machine!
 
 
 
@@ -102,7 +102,7 @@ Task("Startup")
         Password = "Password1",
 
         Host = "Machine2"
-        Port = 8080,
+        Port = 8888,
 
         Target = "Remote"
 	});
@@ -121,7 +121,7 @@ Task("Startup")
     Information("---Config Agent---");
 	ConfigureAgent(new AgentSettings()
 	{
-		Port = 8080,
+		Port = 8888,
 
         EnableTerminationCheck = false,
 		EnableAPI = true
