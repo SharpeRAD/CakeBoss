@@ -1,4 +1,4 @@
-#addin "Cake.Slack"
+#addin "Cake.Powershell"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -12,7 +12,7 @@ var configuration = Argument("configuration", "Release");
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// TASK DEFINITIONS
+// SERVICE EVENTS
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Start")
@@ -54,36 +54,20 @@ Task("Shutdown")
 
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// REMOTE EVENTS
+///////////////////////////////////////////////////////////////////////////////
+
 Task("Remote")
-    .IsDependentOn("Slack")
     .Does(() =>
 {
     Information("---Remote Webservice Call---");
-    Debug("-- Cool Right :)");
-});
-
-
-
-Task("Slack")
-    .Does(() =>
-{
-	//Get Text
-	var text = "Test message";
-
-	// Post Message
-    var token = EnvironmentVariable("SLACK_TOKEN");
-	var result = Slack.Chat.PostMessage(token, "#code", text);
-
-	if (result.Ok)
-	{
-		//Posted
-		Information("Message was succcessfully sent to Slack.");
-	}
-	else
-	{
-		//Error
-		Error("Failed to send message to Slack: {0}", result.Error);
-	}
+    StartPowershellScript("Write-Host", args => 
+        { 
+            args.AppendQuoted("Triggering remote deployment"); 
+        });
 });
 
 
