@@ -180,7 +180,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\CakeBoss.Agent.cake" "$(TargetDir)CakeBoss.Agent.cake"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\CakeBoss.Agent.cake" "$(TargetDir)CakeBoss.Agent.cake"
+mkdir $(TargetDir)Tools
+copy /Y "$(SolutionDir)..\tools\nuget.exe" "$(TargetDir)tools\nuget.exe"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
