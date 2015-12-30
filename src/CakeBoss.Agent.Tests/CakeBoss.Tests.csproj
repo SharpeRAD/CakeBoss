@@ -208,9 +208,7 @@
     <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\CakeBoss.Agent.cake" "$(TargetDir)CakeBoss.Agent.cake"
-mkdir $(TargetDir)Tools
-copy /Y "$(SolutionDir)..\tools\nuget.exe" "$(TargetDir)tools\nuget.exe"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\CakeBoss.Agent.cake" "$(TargetDir)CakeBoss.Agent.cake"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
