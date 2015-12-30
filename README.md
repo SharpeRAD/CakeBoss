@@ -16,7 +16,6 @@ CakeBoss.Agent is a windows service that subscribes to the following events, exe
 
 * Start Service
 * Stop Service
-
 * Startup Server
 * Shutdown Server
 * Terminate Server
@@ -68,7 +67,7 @@ Task("Terminate")
 
 ## Agent API
 
-A Nancy based webservice enables remote calls through the "Cake.CakeBoss" nuget package, allowing a central machine to execute tasks on individual nodes. Should go without saying but please do NOT enabled the api on a public machine!
+A Nancy based webservice enables remote calls from the "Cake.CakeBoss" nuget package, allowing a central machine to execute tasks on individual nodes. Should go without saying but please do NOT enabled the api on a public machine!
 
 
 
@@ -116,28 +115,21 @@ Task("Startup")
 
 ```csharp
 Task("Startup")
-    .Description("Configures the webservice on Machine2")
+    .Description("Configures the API on Machine2")
     .Does(() =>
 {
-    Information("---Config Webservice---");
-	ConfigureHost(new HostSettings()
-	{
-        Port = 8080
-	}.AddUser("Admin", "Password1"));
-
-
-
-    Information("---Start Agent---");
-    
+    Information("---Config Agent---");
 	ConfigureAgent(new AgentSettings()
 	{
-		EnableTerminationCheck = false,
-		EnableWebService = true
-	});
+		Port = 8080,
+
+        EnableTerminationCheck = false,
+		EnableAPI = true
+	}.AddUser("Admin", "Password1"));
 });
 
 Task("Remote")
-    .Description("remote target on machine2")
+    .Description("Remote target on machine2")
     .Does(() =>
 {
     Information("---This would execute on machine2 from the script on machine1---");
