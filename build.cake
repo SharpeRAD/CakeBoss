@@ -205,7 +205,7 @@ Task("Copy-Files")
     CreateDirectory(binAgentDir + "/Tools/");
     CreateDirectory(binAgentDir + "/Addins/");
 
-    CopyFileToDirectory("./tools/nuget.exe", binAgentDir + "/Tools/");
+    //CopyFileToDirectory("./tools/nuget.exe", binAgentDir + "/Tools/");
     CopyFiles(new FilePath[] { "LICENSE", "README.md", "ReleaseNotes.md" }, binAgentDir);
 
 
