@@ -80,6 +80,8 @@ A Nancy based api enables remote calls from the "Cake.CakeBoss" nuget package, a
 
 ## Client Referencing
 
+[![NuGet Version](http://img.shields.io/nuget/v/Cake.CakeBoss.svg?style=flat)](https://www.nuget.org/packages/Cake.CakeBoss/) [![NuGet Downloads](http://img.shields.io/nuget/dt/Cake.CakeBoss.svg?style=flat)](https://www.nuget.org/packages/Cake.CakeBoss/)
+
 Cake.CakeBoss is available as a nuget package from the package manager console:
 
 ```csharp
