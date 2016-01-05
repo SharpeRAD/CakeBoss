@@ -22,8 +22,6 @@ CakeBoss.Agent is a windows service that subscribes to the following events, exe
 
 
 
-## Agent Event Usage
-
 ```csharp
 Task("Start")
     .Description("Service Start.")
@@ -155,8 +153,6 @@ Task("Deploy")
 CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consulte their documetnation for the fluent interface.
 
 
-
-## Scheduled Task Usage
 
 ```csharp
 Task("Start")
