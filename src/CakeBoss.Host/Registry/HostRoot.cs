@@ -113,6 +113,7 @@ namespace CakeBoss.Host
 
             //CakeBoss Host
             container.Register<HostSettings>(new PerContainerLifetime());
+            container.Register<TaskRegistry>(new PerContainerLifetime());
 
 
 

@@ -23,6 +23,7 @@ namespace CakeBoss.Host
         /// <param name="context">The context.</param>
         /// <param name="settings">The Nuget server settings.</param>
         [CakeMethodAlias]
+        [CakeAliasCategory("Host")]
         public static void ConfigureHost(this ICakeContext context, HostSettings settings)
         {
             HostSettings instance = context.GetContainer().GetInstance<HostSettings>();

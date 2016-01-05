@@ -1,3 +1,6 @@
+### New in 0.1.0 (Released 2016/01/05)
+* Scheduled Tasks
+
 ### New in 0.0.9 (Released 2015/12/30)
 * Working AppVeyor & visual studio debugging build process
 

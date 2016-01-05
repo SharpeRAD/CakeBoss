@@ -18,6 +18,7 @@ namespace CakeBoss.Agent
     public static class AgentAliases
     {
         [CakeMethodAlias]
+        [CakeAliasCategory("Agent")]
         public static void ConfigureAgent(this ICakeContext context, AgentSettings settings)
         {
             if (settings == null)
@@ -25,7 +26,9 @@ namespace CakeBoss.Agent
                 throw new ArgumentNullException("settings");
             }
 
-            //Config
+
+
+            //Host
             context.ConfigureHost(settings);
 
             //Termination
@@ -68,6 +71,12 @@ namespace CakeBoss.Agent
                 {
                     context.Log.Error("Agent api has already been configured.");
                 }
+            }
+
+            //Scheduled Tasks
+            if (settings.EnableScheduledTasks)
+            {
+                context.StartSchedules();
             }
         }
     }

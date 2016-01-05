@@ -128,7 +128,7 @@ Task("Start")
     .Description("Configures the API on Machine2")
     .Does(() =>
 {
-    Information("---Configure the agent API---");
+    Information("---Configure the agent---");
 	ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -145,6 +145,54 @@ Task("Deploy")
     Information("---This would execute on machine2 from the script on machine1---");
 });
 ```
+
+
+
+
+
+## Scheduled Tasks
+
+CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consulte their documetnation for the fluent interface.
+
+
+
+## Scheduled Task Usage
+
+```csharp
+Task("Start")
+    .Description("Service Start.")
+    .Does(() =>
+{
+    //Every two hours
+	ScheduleTask("Timed-Critical-Task")
+        .ToRunNow().AndEvery(2).Hours();
+
+    //15 minute delay
+    ScheduleTask("Timed-Critical-Task")
+        .ToRunOnceIn(15).Minutes();
+        
+    //Every morning
+    ScheduleTask("Timed-Critical-Task")
+        .ToRunEvery(1).Days().At(8, 30);
+
+
+
+    Information("---Configure the agent---");
+	ConfigureAgent(new AgentSettings()
+	{
+        EnableScheduledTasks = true
+	});
+});
+
+Task("Timed-Critical-Task")
+    .Description("A task that needs to run at a particular time")
+    .Does(() =>
+{
+
+});
+```
+
+
 
 
 

@@ -34,7 +34,8 @@ namespace CakeBoss.Host
                 "System", "System.Collections.Generic", "System.Linq",
                 "System.Text", "System.Threading.Tasks", "System.IO",
                 "Cake.Core", "Cake.Core.IO", "Cake.Core.Scripting", "Cake.Core.Diagnostics",
-                "CakeBoss.Host", "CakeBoss.Agent", "Cake.CakeBoss"
+                "CakeBoss.Host", "CakeBoss.Agent", "Cake.CakeBoss",
+                "FluentScheduler.Model"
             };
         }
 
@@ -58,7 +59,7 @@ namespace CakeBoss.Host
 
             // Load other Cake-related assemblies that we need.
             var assemblyDirectory = _fileSystem.GetDirectory(root);
-            var patterns = new[] { "Cake.Core.dll", "Cake.Common.dll", "CakeBoss.Host.dll", "CakeBoss.Agent.exe", "Cake.CakeBoss.dll" };
+            var patterns = new[] { "Cake.Core.dll", "Cake.Common.dll", "CakeBoss.Host.dll", "CakeBoss.Agent.exe", "Cake.CakeBoss.dll", "FluentScheduler.dll" };
             foreach (var pattern in patterns)
             {
                 var cakeAssemblies = assemblyDirectory.GetFiles(pattern, SearchScope.Current);

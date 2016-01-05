@@ -18,13 +18,20 @@ var configuration = Argument("configuration", "Release");
 Task("Start")
     .Does(() =>
 {
+    Information("---Add Scheduled Tasks---");
+    ScheduleTask("Timed")
+        .ToRunOnceIn(15).Seconds();
+
+
+
     Information("---Start Agent---");
 	ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
 
         EnableTerminationCheck = false,
-		EnableAPI = true
+		EnableAPI = true,
+        EnableScheduledTasks = true
 	}.AddUser("Admin", "Password1"));
            
         
@@ -57,7 +64,7 @@ Task("Shutdown")
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// REMOTE EVENTS
+// SPECIAL EVENTS
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Remote")
@@ -70,6 +77,11 @@ Task("Remote")
         });
 });
 
+Task("Timed")
+    .Does(() =>
+{
+    Information("---Timed Task Call---");
+});
 
 
 

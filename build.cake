@@ -166,6 +166,8 @@ Task("Copy-Files")
     CopyFileToDirectory(buildAgentDir + "/CakeBoss.Agent.exe", binAgentDir);
     CopyFileToDirectory(buildAgentDir + "/CakeBoss.Agent.exe.config", binAgentDir);
 
+    CopyFileToDirectory(buildAgentDir + "/FluentScheduler.dll", binAgentDir);
+
     CopyFileToDirectory(buildAgentDir + "/LightInject.dll", binAgentDir);
     CopyFileToDirectory(buildAgentDir + "/LightInject.Annotation.dll", binAgentDir);
 

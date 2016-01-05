@@ -11,7 +11,7 @@ namespace CakeBoss.Agent
     /// </summary>
     public class AgentSettings : HostSettings
     {
-        #region Properties (2)
+        #region Properties (3)
             /// <summary>
             /// Gets or sets if AWS termination time should be polled
             /// </summary>
@@ -21,6 +21,11 @@ namespace CakeBoss.Agent
             /// Gets or sets if the nancy agent service should be enabled
             /// </summary>
             public bool EnableAPI { get; set; }
+
+            /// <summary>
+            /// Gets or sets if the scheduled tasks should be enabled
+            /// </summary>
+            public bool EnableScheduledTasks { get; set; }
         #endregion
     }
 }
