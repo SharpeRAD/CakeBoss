@@ -62,6 +62,12 @@ Setup(() =>
 		ExcludeVersion  = true,
 		OutputDirectory = "./tools"
     });
+    
+	NuGetInstall("gitreleasemanager", new NuGetInstallSettings 
+	{
+		ExcludeVersion  = true,
+		OutputDirectory = "./tools"
+    });
 });
 
 
@@ -227,6 +233,7 @@ Task("Zip-Files")
     .Does(() =>
 {
     var filename = buildResultDir + "/CakeBoss-v" + semVersion + ".zip";
+
     Zip(binAgentDir, filename);
 });
 
@@ -236,7 +243,8 @@ Task("Create-NuGet-Packages")
     .IsDependentOn("Zip-Files")
     .Does(() =>
 {
-    NuGetPack("./nuspec/Cake.CakeBoss.nuspec", new NuGetPackSettings {
+    NuGetPack("./nuspec/Cake.CakeBoss.nuspec", new NuGetPackSettings 
+    {
         Version = version,
         ReleaseNotes = releaseNotes.Notes.ToArray(),
         BasePath = binAddinDir,
@@ -254,15 +262,17 @@ Task("Publish-Nuget")
 {
     // Resolve the API key.
     var apiKey = EnvironmentVariable("NUGET_API_KEY");
+
     if(string.IsNullOrEmpty(apiKey)) 
 	{
         throw new InvalidOperationException("Could not resolve MyGet API key.");
     }
 
-    // Get the path to the package.
-    var package = nugetRoot + "/Cake.CakeBoss." + version + ".nupkg";
+
 
     // Push the package.
+    var package = nugetRoot + "/Cake.CakeBoss." + version + ".nupkg";
+
     NuGetPush(package, new NuGetPushSettings 
 	{
         ApiKey = apiKey
@@ -284,6 +294,7 @@ Task("Upload-AppVeyor-Artifacts")
     .Does(() =>
 {
     var artifact = new FilePath(buildResultDir + "/Cake-CakeBoss-v" + semVersion + ".zip");
+
     AppVeyor.UploadArtifact(artifact);
 }); 
 
@@ -332,13 +343,17 @@ Task("Slack")
 {
     // Resolve the API key.
     var token = EnvironmentVariable("SLACK_TOKEN");
+
     if(string.IsNullOrEmpty(token)) 
 	{
         throw new InvalidOperationException("Could not resolve Slack token.");
     }
 
+
+
 	//Get Text
 	var text = "";
+
     if (isPullRequest)
     {
         text = "PR submitted for " + appName;
@@ -348,8 +363,11 @@ Task("Slack")
         text = "Published " + appName + " v" + version;
     }
 
+
+
 	// Post Message
 	var result = Slack.Chat.PostMessage(token, "#code", text);
+
 	if (result.Ok)
 	{
 		//Posted
@@ -383,7 +401,7 @@ Task("Publish")
 Task("AppVeyor")
     .IsDependentOn("Update-AppVeyor-Build-Number")
     .IsDependentOn("Upload-AppVeyor-Artifacts")
-    .IsDependentOn("Release")
+    //.IsDependentOn("Release")
     .IsDependentOn("Publish");
     
 
