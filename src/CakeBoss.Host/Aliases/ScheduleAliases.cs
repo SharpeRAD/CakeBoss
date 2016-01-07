@@ -1,6 +1,7 @@
 ﻿#region Using Statements
     using Cake.Core;
     using Cake.Core.Annotations;
+    using Cake.Core.Diagnostics;
 
     using FluentScheduler;
     using FluentScheduler.Model;
@@ -38,8 +39,9 @@ namespace CakeBoss.Host
         [CakeAliasCategory("Schedule")]
         public static void StartSchedules(this ICakeContext context)
         {
-            TaskRegistry instance = context.GetContainer().GetInstance<TaskRegistry>();
+            context.Log.Information("Starting scheduled tasks.");
 
+            TaskRegistry instance = context.GetContainer().GetInstance<TaskRegistry>();
             TaskManager.Initialize(instance);
         }
     }

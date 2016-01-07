@@ -202,7 +202,7 @@ Task("Copy-Files")
 
     CopyFileToDirectory("./script/Install.bat", binAgentDir);
     CopyFileToDirectory("./script/Uninstall.bat", binAgentDir);
-    CopyFileToDirectory("./script/CakeBoss.Agent.cake", binAgentDir);
+    CopyFile("./script/Release.cake", binAgentDir + "/CakeBoss.Agent.cake");
 
     CreateDirectory(binAgentDir + "/Tools/");
     CreateDirectory(binAgentDir + "/Addins/");
@@ -254,7 +254,6 @@ Task("Publish-Nuget")
 {
     // Resolve the API key.
     var apiKey = EnvironmentVariable("NUGET_API_KEY");
-
     if(string.IsNullOrEmpty(apiKey)) 
 	{
         throw new InvalidOperationException("Could not resolve MyGet API key.");
@@ -290,12 +289,56 @@ Task("Upload-AppVeyor-Artifacts")
 
 
 
+Task("Create-GitHub-Release")
+    .IsDependentOn("Zip-Files")
+    .Does(() =>
+{
+	//Get Arguments
+	var milestone = string.Concat("v", version);
+	
+    var userName = EnvironmentVariable("GITHUB_USERNAME");
+	if(string.IsNullOrEmpty(userName)) 
+	{
+        throw new InvalidOperationException("Could not resolve GitHub username.");
+    }
+	
+    var password = EnvironmentVariable("GITHUB_PASSWORD");
+	if(string.IsNullOrEmpty(password)) 
+	{
+        throw new InvalidOperationException("Could not resolve GitHub password.");
+    }
+
+	
+	
+	//Create Release
+    var asset = new FilePath(buildResultDir + "/Cake-CakeBoss-v" + semVersion + ".zip");
+
+    GitReleaseManagerCreate(userName, password, "SharpeRAD", "CakeBoss", new GitReleaseManagerCreateSettings 
+	{
+        Milestone         = milestone,
+        Name              = milestone,
+		InputFilePath 	  = "./ReleaseNotes.md",
+        Prerelease        = true,
+        TargetCommitish   = "main",
+		
+		Assets            = asset.FullPath
+    });
+});
+
+
+
 Task("Slack")
     .Does(() =>
 {
+    // Resolve the API key.
+    var token = EnvironmentVariable("SLACK_TOKEN");
+    if(string.IsNullOrEmpty(token)) 
+	{
+        throw new InvalidOperationException("Could not resolve Slack token.");
+    }
+
 	//Get Text
 	var text = "";
-
     if (isPullRequest)
     {
         text = "PR submitted for " + appName;
@@ -306,8 +349,7 @@ Task("Slack")
     }
 
 	// Post Message
-	var result = Slack.Chat.PostMessage(EnvironmentVariable("SLACK_TOKEN"), "#code", text);
-
+	var result = Slack.Chat.PostMessage(token, "#code", text);
 	if (result.Ok)
 	{
 		//Posted
@@ -331,15 +373,23 @@ Task("Slack")
 Task("Package")
 	.IsDependentOn("Zip-Files")
     .IsDependentOn("Create-NuGet-Packages");
-
-Task("Default")
-    .IsDependentOn("Package");
+    
+Task("Release")
+    .IsDependentOn("Create-GitHub-Release");
+  
+Task("Publish")
+    .IsDependentOn("Publish-NuGet");
 
 Task("AppVeyor")
     .IsDependentOn("Update-AppVeyor-Build-Number")
     .IsDependentOn("Upload-AppVeyor-Artifacts")
-    .IsDependentOn("Publish-Nuget")
-    .IsDependentOn("Slack");
+    .IsDependentOn("Release")
+    .IsDependentOn("Publish");
+    
+
+
+Task("Default")
+    .IsDependentOn("Package");
 
 
 

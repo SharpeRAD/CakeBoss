@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cake.Common, Version=0.6.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Cake.Common.0.6.4\lib\net45\Cake.Common.dll</HintPath>
@@ -182,10 +185,15 @@
       <Name>CakeBoss.Host</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\CakeBoss.Agent.cake" "$(TargetDir)CakeBoss.Agent.cake"
+    <PostBuildEvent>copy /Y "$(SolutionDir)..\script\Test.cake" "$(TargetDir)CakeBoss.Agent.cake"
+
 mkdir $(TargetDir)Tools
+
 copy /Y "$(SolutionDir)..\tools\nuget.exe" "$(TargetDir)tools\nuget.exe"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

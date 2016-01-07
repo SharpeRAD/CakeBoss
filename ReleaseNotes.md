@@ -1,3 +1,10 @@
+### New in 0.1.1 (Released 2016/01/07)
+* Add GitHub releases to build
+* Seperate Test / Release cake scripts
+* Fix log formatting / default locations
+* Exclude TopShelf configuration result from logs
+* Add icon to agent
+
 ### New in 0.1.0 (Released 2016/01/05)
 * Scheduled Tasks
 

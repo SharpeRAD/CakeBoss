@@ -4,6 +4,7 @@
 
     using Topshelf;
     using Serilog;
+    using Serilog.Events;
 
     using LightInject;
     using Nancy.Hosting.Self;
@@ -32,13 +33,19 @@ namespace CakeBoss.Agent
 
             if (!Debugger.IsAttached && Directory.Exists("C:/Logs/CakeBoss/"))
             {
-                logFile = @"C:/Logs/Agent-{Date}.log";
+                logFile = @"C:/Logs/CakeBoss/Agent-{Date}.log";
             }
 
             Log.Logger = new LoggerConfiguration()
                                 .WriteTo.RollingFile(logFile)
                                 .WriteTo.ColoredConsole()
-                                .MinimumLevel.Verbose()
+                                .MinimumLevel.Is(Debugger.IsAttached ? LogEventLevel.Verbose : LogEventLevel.Information)
+                                .Filter.ByExcluding((LogEvent log) => 
+                                {
+                                    return log.MessageTemplate.Text.Contains("Configuration Result:") 
+                                        && log.Properties.Count > 0 
+                                        && log.Properties["0"].ToString().Contains("[Success] Name CakeBoss.Agent");
+                                })
                                 .CreateLogger();
 
 
@@ -73,7 +80,7 @@ namespace CakeBoss.Agent
                 x.SetDisplayName("CakeBoss - Agent");
                 x.SetServiceName("CakeBoss.Agent");
 
-                x.UseSerilog();
+                x.UseSerilog(Log.Logger);
 
 
 

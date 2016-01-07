@@ -113,7 +113,7 @@ namespace CakeBoss.Host
 
             private void CreateOutput(string text, ConsoleColor color)
             {
-                if (!String.IsNullOrEmpty(text))
+                /*if (!String.IsNullOrEmpty(text))
                 {
                     //Format
                     text = text.Replace(Environment.NewLine + Environment.NewLine, Environment.NewLine);
@@ -135,7 +135,7 @@ namespace CakeBoss.Host
                         Log.Logger.Information(info);
                         _Output.Clear();
                     }
-                }
+                }*/
             }
         #endregion
     }

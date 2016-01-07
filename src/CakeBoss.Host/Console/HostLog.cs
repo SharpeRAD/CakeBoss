@@ -7,6 +7,9 @@
     using Cake.Core.Diagnostics;
     using Cake.Host.Diagnostics;
     using Cake.Host.Diagnostics.Formatting;
+
+    using Serilog;
+    using Serilog.Events;
 #endregion
 
 
@@ -64,7 +67,9 @@ namespace CakeBoss.Host
                         {
                             SetPalette(token, palette);
                             _console.Write("{0}", token.Render(args));
-                        }                    
+                        }
+
+                        Log.Logger.Write(this.GetLogLevel(level), format, args);
                     }
                     finally
                     {
@@ -108,6 +113,29 @@ namespace CakeBoss.Host
                     { LogLevel.Debug, new ConsolePalette(background, ConsoleColor.DarkGray, background, ConsoleColor.Gray) }
                 };
                 return palette;
+            }
+
+            private LogEventLevel GetLogLevel(LogLevel level)
+            {
+                switch (level)
+                {
+                    case LogLevel.Fatal:
+                        return LogEventLevel.Fatal;
+
+                    case LogLevel.Error:
+                        return LogEventLevel.Error;
+
+                    case LogLevel.Warning:
+                        return LogEventLevel.Warning;
+
+                    case LogLevel.Information:
+                        return LogEventLevel.Information;
+
+                    case LogLevel.Verbose:
+                        return LogEventLevel.Verbose;
+                }
+
+                return LogEventLevel.Debug;
             }
         #endregion
     }
