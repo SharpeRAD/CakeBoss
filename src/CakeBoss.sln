@@ -22,9 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{23704DC0-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{567027D0-0823-4B53-9FD2-E1FB020DAAD9}"
 	ProjectSection(SolutionItems) = preProject
-		..\script\CakeBoss.Agent.cake = ..\script\CakeBoss.Agent.cake
-		..\script\Install.bat = ..\script\Install.bat
-		..\script\Uninstall.bat = ..\script\Uninstall.bat
+		..\script\Release.cake = ..\script\Release.cake
+		..\script\Test.cake = ..\script\Test.cake
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.CakeBoss", "Cake.CakeBoss\Cake.CakeBoss.csproj", "{8C311438-E0F0-4A47-AC31-DA29BF901FB2}"
