@@ -4,6 +4,8 @@
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
 
+var tools = Argument("tools", "./tools");
+
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 
@@ -60,13 +62,13 @@ Setup(() =>
 	NuGetInstall("xunit.runner.console", new NuGetInstallSettings 
 	{
 		ExcludeVersion  = true,
-		OutputDirectory = "./tools"
+		OutputDirectory = tools
     });
     
 	NuGetInstall("gitreleasemanager", new NuGetInstallSettings 
 	{
 		ExcludeVersion  = true,
-		OutputDirectory = "./tools"
+		OutputDirectory = tools
     });
 });
 
@@ -328,10 +330,9 @@ Task("Create-GitHub-Release")
 	{
         Milestone         = milestone,
         Name              = milestone,
-		InputFilePath 	  = "./ReleaseNotes.md",
         Prerelease        = true,
         TargetCommitish   = "main",
-		
+        InputFilePath 	  = "./ReleaseNotes.md",
 		Assets            = asset.FullPath
     });
 });
