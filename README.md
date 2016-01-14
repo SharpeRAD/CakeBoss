@@ -192,6 +192,24 @@ Task("Timed-Critical-Task")
 
 
 
+## Addins
+
+Since CakeBoss is effectively just a different host for Cakes engine you get access to all of Cakes [addins](http://cakebuild.net/addins) in your tasks. Heres a few examples to get you started:
+
+* [Cake.AWS.CloudFront](https://github.com/SharpeRAD/Cake.AWS.CloudFront)
+* [Cake.AWS.EC2](https://github.com/SharpeRAD/Cake.AWS.EC2)
+* [Cake.AWS.ElasticLoadBalancing](https://github.com/SharpeRAD/Cake.AWS.ElasticLoadBalancing)
+* [Cake.AWS.Route53](https://github.com/SharpeRAD/Cake.AWS.Route53)
+* [Cake.AWS.S3](https://github.com/SharpeRAD/Cake.AWS.S3)
+* [Cake.IIS](https://github.com/SharpeRAD/Cake.IIS)
+* [Cake.Powershell](https://github.com/SharpeRAD/Cake.Powershell)
+* [Cake.Services](https://github.com/SharpeRAD/Cake.Services)
+* [Cake.WebDeploy](https://github.com/SharpeRAD/Cake.WebDeploy)
+
+
+
+
+
 ## Example
 
 A complete Cake example can be found [here](https://github.com/SharpeRAD/CakeBoss/blob/master/script/CakeBoss.Agent.cake)

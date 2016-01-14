@@ -66,23 +66,23 @@ namespace Cake.CakeBoss
             /// Gets or sets the full URI to connect to
             /// </summary>
             public string Url
+            {
+                set
                 {
-                    set
+                    _Url = value;
+                }
+                get
+                {
+                    if (!String.IsNullOrEmpty(_Url))
                     {
-                        _Url = value;
+                        return _Url;
                     }
-                    get
+                    else
                     {
-                        if (!String.IsNullOrEmpty(_Url))
-                        {
-                            return _Url;
-                        }
-                        else
-                        {
-                            return "http://" + this.Host + ":" + this.Port.ToString();
-                        }
+                        return "http://" + this.Host + ":" + this.Port.ToString();
                     }
                 }
+            }
 
 
 
