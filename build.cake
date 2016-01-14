@@ -16,7 +16,7 @@ var appName = "CakeBoss";
 
 
 //////////////////////////////////////////////////////////////////////
-// PREPARATION
+// VARIABLES
 //////////////////////////////////////////////////////////////////////
 
 // Get whether or not this is a local build.
@@ -37,14 +37,17 @@ var buildAddinDir = "./src/Cake.CakeBoss/bin/" + configuration;
 var buildAgentDir = "./src/CakeBoss.Agent/bin/" + configuration;
 
 var buildResultDir = "./build/v" + semVersion;
-var testResultDir = buildResultDir + "/tests";
-var nugetRoot = buildResultDir + "/nuget";
+var testResultsDir = buildResultDir + "/test-results";
 
+var nugetRoot = buildResultDir + "/nuget";
 var binAddinDir = buildResultDir + "/binAddin";
 var binAgentDir = buildResultDir + "/binAgent";
 
 //Get Solutions
 var solutions       = GetFiles("./**/*.sln");
+
+// Package
+var zipPackage = buildResultDir + "/CakeBoss-v" + semVersion + ".zip";
 
 
 
@@ -72,8 +75,6 @@ Setup(() =>
     });
 });
 
-
-
 Teardown(() =>
 {
 	// Executed AFTER the last task.
@@ -85,7 +86,7 @@ Teardown(() =>
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// TASK DEFINITIONS
+// PREPARE
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Clean")
@@ -95,11 +96,11 @@ Task("Clean")
 	Information("Cleaning old files");
 	CleanDirectories(new DirectoryPath[] 
 	{
-        buildResultDir, binAgentDir, binAddinDir, testResultDir, nugetRoot
+        buildDir, buildTestDir, buildResultDir, 
+        binAgentDir, binAddinDir, 
+        testResultsDir, nugetRoot
 	});
 });
-
-
 
 Task("Restore-Nuget-Packages")
 	.IsDependentOn("Clean")
@@ -112,6 +113,14 @@ Task("Restore-Nuget-Packages")
         NuGetRestore(solution);
     }
 });
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// BUILD
+///////////////////////////////////////////////////////////////////////////////
 
 Task("Patch-Assembly-Info")
     .IsDependentOn("Restore-Nuget-Packages")
@@ -128,8 +137,6 @@ Task("Patch-Assembly-Info")
         Copyright = "Copyright (c) Phillip Sharpe 2015"
     });
 });
-
-
 
 Task("Build")
     .IsDependentOn("Patch-Assembly-Info")
@@ -159,6 +166,12 @@ Task("Run-Unit-Tests")
 });
 
 
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// PACKAGE
+///////////////////////////////////////////////////////////////////////////////
 
 Task("Copy-Files")
     .IsDependentOn("Run-Unit-Tests")
@@ -234,9 +247,7 @@ Task("Zip-Files")
     .IsDependentOn("Copy-Files")
     .Does(() =>
 {
-    var filename = buildResultDir + "/CakeBoss-v" + semVersion + ".zip";
-
-    Zip(binAgentDir, filename);
+    Zip(binAgentDir, zipPackage);
 });
 
 
@@ -283,6 +294,12 @@ Task("Publish-Nuget")
 
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// APPVEYOR
+///////////////////////////////////////////////////////////////////////////////
+
 Task("Update-AppVeyor-Build-Number")
     .WithCriteria(() => isRunningOnAppVeyor)
     .Does(() =>
@@ -295,49 +312,16 @@ Task("Upload-AppVeyor-Artifacts")
     .WithCriteria(() => isRunningOnAppVeyor)
     .Does(() =>
 {
-    var artifact = new FilePath(buildResultDir + "/Cake-CakeBoss-v" + semVersion + ".zip");
-
-    AppVeyor.UploadArtifact(artifact);
+    AppVeyor.UploadArtifact(zipPackage);
 }); 
 
 
 
-Task("Create-GitHub-Release")
-    .IsDependentOn("Zip-Files")
-    .Does(() =>
-{
-	//Get Arguments
-	var milestone = string.Concat("v", version);
-	
-    var userName = EnvironmentVariable("GITHUB_USERNAME");
-	if(string.IsNullOrEmpty(userName)) 
-	{
-        throw new InvalidOperationException("Could not resolve GitHub username.");
-    }
-	
-    var password = EnvironmentVariable("GITHUB_PASSWORD");
-	if(string.IsNullOrEmpty(password)) 
-	{
-        throw new InvalidOperationException("Could not resolve GitHub password.");
-    }
-
-	
-	
-	//Create Release
-    var asset = new FilePath(buildResultDir + "/Cake-CakeBoss-v" + semVersion + ".zip");
-
-    GitReleaseManagerCreate(userName, password, "SharpeRAD", "CakeBoss", new GitReleaseManagerCreateSettings 
-	{
-        Milestone         = milestone,
-        Name              = milestone,
-        Prerelease        = true,
-        TargetCommitish   = "main",
-        InputFilePath 	  = "./ReleaseNotes.md",
-		Assets            = asset.FullPath
-    });
-});
 
 
+///////////////////////////////////////////////////////////////////////////////
+// MESSAGE
+///////////////////////////////////////////////////////////////////////////////
 
 Task("Slack")
     .Does(() =>
@@ -352,21 +336,9 @@ Task("Slack")
 
 
 
-	//Get Text
-	var text = "";
-
-    if (isPullRequest)
-    {
-        text = "PR submitted for " + appName;
-    }
-    else
-    {
-        text = "Published " + appName + " v" + version;
-    }
-
-
-
 	// Post Message
+	var text = "Published " + appName + " v" + version;
+	
 	var result = Slack.Chat.PostMessage(token, "#code", text);
 
 	if (result.Ok)
@@ -392,18 +364,15 @@ Task("Slack")
 Task("Package")
 	.IsDependentOn("Zip-Files")
     .IsDependentOn("Create-NuGet-Packages");
-    
-Task("Release")
-    .IsDependentOn("Create-GitHub-Release");
-  
+
 Task("Publish")
-    .IsDependentOn("Publish-NuGet");
+    .IsDependentOn("Publish-Nuget");
 
 Task("AppVeyor")
+	.IsDependentOn("Publish")
     .IsDependentOn("Update-AppVeyor-Build-Number")
     .IsDependentOn("Upload-AppVeyor-Artifacts")
-    //.IsDependentOn("Release")
-    .IsDependentOn("Publish");
+    .IsDependentOn("Slack");
     
 
 
