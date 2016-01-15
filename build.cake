@@ -134,7 +134,7 @@ Task("Patch-Assembly-Info")
         Version = version,
         FileVersion = version,
         InformationalVersion = semVersion,
-        Copyright = "Copyright (c) Phillip Sharpe 2015"
+        Copyright = "Copyright (c) 2015 - " + DateTime.Now.Year.ToString() + " Phillip Sharpe"
     });
 });
 

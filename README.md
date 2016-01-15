@@ -1,12 +1,27 @@
 # CakeBoss
 
-CakeBoss is the DevOpps tool for the C# masocistc that knows Chef and Puppet are better but blindly chooses something different for the sole reason that they don't like being told they can't write their scripts in C#!
+CakeBoss is the DevOpps tool for the C# masocistc that knows Chef and Puppet are better but blindly chooses something different for the sole reason that they don't like being told they can't write their scripts in C#
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8s5w8ier41krrqpd?svg=true)](https://ci.appveyor.com/project/PhillipSharpe/cakeboss)
+[![Build status](https://ci.appveyor.com/api/projects/status/8s5w8ier41krrqpd?svg=true)](https://ci.appveyor.com/project/SharpeRAD/cakeboss)
 
 [![cakebuild.net](https://img.shields.io/badge/WWW-cakebuild.net-blue.svg)](http://cakebuild.net/)
 
 [![Join the chat at https://gitter.im/cake-build/cake](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cake-build/cake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
+
+## Table of contents
+
+1. [Agent Events]https://github.com/SharpeRAD/CakeBoss#agent-events)
+2. [Agent API]https://github.com/SharpeRAD/CakeBoss#agent-api)
+3. [Client Referencing]https://github.com/SharpeRAD/CakeBoss#client-referencing)
+4. [API Usage Machine1]https://github.com/SharpeRAD/CakeBoss#api-usage-machine1)
+5. [API Usage Machine2]https://github.com/SharpeRAD/CakeBoss#api-usage-machine2)
+6. [Scheduled Tasks]https://github.com/SharpeRAD/CakeBoss#scheduled-tasks)
+7. [Addins]https://github.com/SharpeRAD/CakeBoss#addins)
+8. [Example]https://github.com/SharpeRAD/CakeBoss#example)
+9. [License]https://github.com/SharpeRAD/CakeBoss#license)
+10. [Share the love]https://github.com/SharpeRAD/CakeBoss#share-the-love)
 
 
 
@@ -28,6 +43,7 @@ Task("Start")
     .Does(() =>
 {
 	Information("---Configure the agent---");
+	
     ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -68,8 +84,6 @@ Task("Terminate")
 
 
 
-
-
 ## Agent API
 
 A Nancy based api enables remote calls from the "Cake.CakeBoss" nuget package, allowing a central machine to execute tasks on individual nodes. Should go without saying but please do NOT enabled the api on a public machine!
@@ -94,7 +108,7 @@ or directly in your build script via a cake addin:
 
 
 
-## API Usage (Machine1)
+## API Usage Machine1
 
 ```csharp
 #addin "Cake.CakeBoss"
@@ -104,6 +118,7 @@ Task("Deploy")
     .Does(() =>
 {
     Information("---Call the agent API on another machine---");
+	
     RunRemoteTarget(new RemoteSettings()
 	{
         Username = "Admin",
@@ -119,7 +134,7 @@ Task("Deploy")
 
 
 
-## API Usage (Machine2)
+## API Usage Machine2
 
 ```csharp
 Task("Start")
@@ -127,6 +142,7 @@ Task("Start")
     .Does(() =>
 {
     Information("---Configure the agent---");
+	
 	ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -146,20 +162,18 @@ Task("Deploy")
 
 
 
-
-
 ## Scheduled Tasks
 
-CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consulte their documetnation for the fluent interface.
-
-
+CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consulte their [documentation](https://github.com/fluentscheduler/FluentScheduler) for the fluent interface.
 
 ```csharp
 Task("Start")
     .Description("Service Start.")
     .Does(() =>
 {
-    //Every two hours
+    Information("---Add scheduled tasks---");
+	
+	//Every two hours
 	ScheduleTask("Timed-Critical-Task")
         .ToRunNow().AndEvery(2).Hours();
 
@@ -174,6 +188,7 @@ Task("Start")
 
 
     Information("---Configure the agent---");
+	
 	ConfigureAgent(new AgentSettings()
 	{
         EnableScheduledTasks = true
@@ -184,17 +199,15 @@ Task("Timed-Critical-Task")
     .Description("A task that needs to run at a particular time")
     .Does(() =>
 {
-
+	Information("---This would execute at the scheduled times---");
 });
 ```
 
 
 
-
-
 ## Addins
 
-Since CakeBoss is effectively just a different host for Cakes engine you get access to all of Cakes [addins](http://cakebuild.net/addins) in your tasks. Heres a few examples to get you started:
+Since CakeBoss is effectively just a different host for the Cake engine you get access to all of its [addins](http://cakebuild.net/addins) in your tasks:
 
 * [Cake.AWS.CloudFront](https://github.com/SharpeRAD/Cake.AWS.CloudFront)
 * [Cake.AWS.EC2](https://github.com/SharpeRAD/Cake.AWS.EC2)
@@ -204,12 +217,24 @@ Since CakeBoss is effectively just a different host for Cakes engine you get acc
 * [Cake.IIS](https://github.com/SharpeRAD/Cake.IIS)
 * [Cake.Powershell](https://github.com/SharpeRAD/Cake.Powershell)
 * [Cake.Services](https://github.com/SharpeRAD/Cake.Services)
+* [Cake.Topshelf](https://github.com/SharpeRAD/Cake.Topshelf)
 * [Cake.WebDeploy](https://github.com/SharpeRAD/Cake.WebDeploy)
-
-
 
 
 
 ## Example
 
-A complete Cake example can be found [here](https://github.com/SharpeRAD/CakeBoss/blob/master/script/CakeBoss.Agent.cake)
+A complete Cake example can be found [here](https://github.com/SharpeRAD/CakeBoss/blob/master/script/Test.cake)
+
+
+
+## License
+
+Copyright © 2015 - 2016 Phillip Sharpe
+CakeBoss is provided as-is under the MIT license. For more information see [LICENSE](https://github.com/SharpeRAD/CakeBoss/cake/blob/develop/LICENSE).
+
+
+
+## Share the love
+
+If this project helps you in anyway then please :star: the repository, as its good to know your hardwork is appreciated.
