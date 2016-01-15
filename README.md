@@ -12,16 +12,16 @@ CakeBoss is the DevOpps tool for the C# masocistc that knows Chef and Puppet are
 
 ## Table of contents
 
-1. [Agent Events]https://github.com/SharpeRAD/CakeBoss#agent-events)
-2. [Agent API]https://github.com/SharpeRAD/CakeBoss#agent-api)
-3. [Client Referencing]https://github.com/SharpeRAD/CakeBoss#client-referencing)
-4. [API Usage Machine1]https://github.com/SharpeRAD/CakeBoss#api-usage-machine1)
-5. [API Usage Machine2]https://github.com/SharpeRAD/CakeBoss#api-usage-machine2)
-6. [Scheduled Tasks]https://github.com/SharpeRAD/CakeBoss#scheduled-tasks)
-7. [Addins]https://github.com/SharpeRAD/CakeBoss#addins)
-8. [Example]https://github.com/SharpeRAD/CakeBoss#example)
-9. [License]https://github.com/SharpeRAD/CakeBoss#license)
-10. [Share the love]https://github.com/SharpeRAD/CakeBoss#share-the-love)
+1. [Agent Events](https://github.com/SharpeRAD/CakeBoss#agent-events)
+2. [Agent API](https://github.com/SharpeRAD/CakeBoss#agent-api)
+3. [Client Referencing](https://github.com/SharpeRAD/CakeBoss#client-referencing)
+4. [API Usage Machine1](https://github.com/SharpeRAD/CakeBoss#api-usage-machine1)
+5. [API Usage Machine2](https://github.com/SharpeRAD/CakeBoss#api-usage-machine2)
+6. [Scheduled Tasks](https://github.com/SharpeRAD/CakeBoss#scheduled-tasks)
+7. [Addins](https://github.com/SharpeRAD/CakeBoss#addins)
+8. [Example](https://github.com/SharpeRAD/CakeBoss#example)
+9. [License](https://github.com/SharpeRAD/CakeBoss#license)
+10. [Share the love](https://github.com/SharpeRAD/CakeBoss#share-the-love)
 
 
 
@@ -231,7 +231,7 @@ A complete Cake example can be found [here](https://github.com/SharpeRAD/CakeBos
 ## License
 
 Copyright © 2015 - 2016 Phillip Sharpe
-CakeBoss is provided as-is under the MIT license. For more information see [LICENSE](https://github.com/SharpeRAD/CakeBoss/cake/blob/develop/LICENSE).
+CakeBoss is provided as-is under the MIT license. For more information see [LICENSE](https://github.com/SharpeRAD/CakeBoss/blob/master/LICENSE).
 
 
 
