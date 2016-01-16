@@ -230,7 +230,7 @@ A complete Cake example can be found [here](https://github.com/SharpeRAD/CakeBos
 
 ## License
 
-Copyright © 2015 - 2016 Phillip Sharpe
+Copyright (c) 2015 - 2016 Phillip Sharpe
 
 CakeBoss is provided as-is under the MIT license. For more information see [LICENSE](https://github.com/SharpeRAD/CakeBoss/blob/master/LICENSE).
 
