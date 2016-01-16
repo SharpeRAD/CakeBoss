@@ -49,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aliases\AgentAliases.cs" />
-    <Compile Include="Properties\SolutionInfo.cs" />
     <Compile Include="Settings\RemoteSettings.cs" />
 	<Compile Include="Properties\Namespaces.cs" />
 	<Compile Include="Properties\AssemblyInfo.cs" />

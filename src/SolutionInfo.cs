@@ -6,8 +6,8 @@
 using System.Reflection;
 
 [assembly: AssemblyProduct("CakeBoss")]
-[assembly: AssemblyVersion("0.1.1")]
-[assembly: AssemblyFileVersion("0.1.1")]
-[assembly: AssemblyInformationalVersion("0.1.1")]
-[assembly: AssemblyCopyright("Copyright (c) Phillip Sharpe 2015")]
+[assembly: AssemblyVersion("0.1.2")]
+[assembly: AssemblyFileVersion("0.1.2")]
+[assembly: AssemblyInformationalVersion("0.1.2")]
+[assembly: AssemblyCopyright("Copyright (c) 2015 - 2016 Phillip Sharpe")]
 

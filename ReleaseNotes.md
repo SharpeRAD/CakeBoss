@@ -1,5 +1,6 @@
 ### New in 0.1.2 (Released 2016/01/16)
 * Fixed SolutionInfo link
+* Changed Cake.CakeBoss alias to pass the target in as its own parameter
 
 ### New in 0.1.1 (Released 2016/01/07)
 * Add GitHub releases to build

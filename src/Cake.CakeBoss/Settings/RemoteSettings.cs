@@ -83,13 +83,6 @@ namespace Cake.CakeBoss
                     }
                 }
             }
-
-
-
-            /// <summary>
-            /// Gets or sets the script target to run
-            /// </summary>
-            public string Target{ get; set; }
         #endregion
     }
 }

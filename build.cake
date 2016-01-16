@@ -97,7 +97,8 @@ Task("Clean")
 
 	CleanDirectories(new DirectoryPath[]
 	{
-        buildDir, buildTestDir, buildResultDir,
+        buildAgentDir, buildAddinDir,
+        buildResultDir,
         binAgentDir, binAddinDir,
         testResultsDir, nugetRoot
 	});
@@ -163,7 +164,7 @@ Task("Run-Unit-Tests")
 {
     XUnit2("./src/**/bin/" + configuration + "/*.Tests.dll", new XUnit2Settings
 	{
-        OutputDirectory = testResultDir,
+        OutputDirectory = testResultsDir,
         XmlReportV1 = true
     });
 });

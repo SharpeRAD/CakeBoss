@@ -36,13 +36,11 @@ Task("Start")
         
 
     Information("---Call API---");
-    RunRemoteTarget(new RemoteSettings()
+    RunRemoteTarget("Remote", new RemoteSettings()
 	{
         Username = "Admin",
         Password = "Password1",
-        Port = 8888,
-
-        Target = "Remote"
+        Port = 8888
 	});
 });
 

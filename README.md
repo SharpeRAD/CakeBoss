@@ -119,16 +119,14 @@ Task("Deploy")
 {
     Information("---Call the agent API on another machine---");
 
-    RunRemoteTarget(new RemoteSettings()
+    RunRemoteTarget("Deploy", new RemoteSettings()
 	{
         Username = "Admin",
         Password = "Password1",
 
         Host = "Machine2"
-        Port = 8888,
-
-        Target = "Deploy"
-	});
+        Port = 8888
+    });
 });
 ```
 

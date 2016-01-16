@@ -24,11 +24,17 @@ namespace Cake.CakeBoss
         /// Run a target on a remote CakeBoss agent
         /// </summary>
         /// <param name="context">The cake context.</param>
+        /// <param name="target">The script target to run.</param>
         /// <param name="settings">The information about the remote target to run.</param>
         /// <returns>If the target ran successfully</returns>
         [CakeMethodAlias]
-        public static bool RunRemoteTarget(this ICakeContext context, RemoteSettings settings)
+        public static bool RunRemoteTarget(this ICakeContext context, string target, RemoteSettings settings)
         {
+            if (String.IsNullOrEmpty(target))
+            {
+                throw new ArgumentNullException("target");
+            }
+
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
@@ -46,10 +52,6 @@ namespace Cake.CakeBoss
             if (String.IsNullOrEmpty(settings.Url))
             {
                 throw new ArgumentNullException("settings.Url");
-            }
-            if (String.IsNullOrEmpty(settings.Target))
-            {
-                throw new ArgumentNullException("settings.Target");
             }
 
 
@@ -73,12 +75,12 @@ namespace Cake.CakeBoss
 
 
             //Request
-            RestRequest request = new RestRequest("/run/" + settings.Target, Method.POST);
+            RestRequest request = new RestRequest("/run/" + target, Method.POST);
             IRestResponse response = client.Execute(request);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                context.Log.Information("Target {0} ran on agent {1}.", settings.Target, url);
+                context.Log.Information("Target {0} ran on agent {1}.", target, url);
                 return true;
             }
             else if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -87,7 +89,7 @@ namespace Cake.CakeBoss
             }
             else if (response.ErrorMessage == "Unable to connect to the remote server")
             {
-                context.Log.Error("Unable to connect. Check the url for the remote host {1}.", settings.Target, url);
+                context.Log.Error("Unable to connect. Check the url for the remote host {1}.", target, url);
             }
             else
             {
