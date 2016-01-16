@@ -1,6 +1,6 @@
 # CakeBoss
 
-CakeBoss is the DevOpps tool for the C# masochistic that knows Chef and Puppet are better but blindly chooses something different because they don't like being told they can't write their scripts in C#
+CakeBoss is the DevOpps tool for the C# masochistic that knows Chef and Puppet are better but chooses something different because they don't like being told they can't write their scripts in C#
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8s5w8ier41krrqpd?svg=true)](https://ci.appveyor.com/project/SharpeRAD/cakeboss)
 
