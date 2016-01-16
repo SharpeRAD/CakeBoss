@@ -1,12 +1,12 @@
 # CakeBoss
 
-CakeBoss is the DevOpps tool for the C# masocistc that knows Chef and Puppet are better but blindly chooses something different for the sole reason that they don't like being told they can't write their scripts in C#
+CakeBoss is the DevOpps tool for the C# masochistic that knows Chef and Puppet are better but blindly chooses something different because they don't like being told they can't write their scripts in C#
 
 [![Build status](https://ci.appveyor.com/api/projects/status/8s5w8ier41krrqpd?svg=true)](https://ci.appveyor.com/project/SharpeRAD/cakeboss)
 
 [![cakebuild.net](https://img.shields.io/badge/WWW-cakebuild.net-blue.svg)](http://cakebuild.net/)
 
-[![Join the chat at https://gitter.im/cake-build/cake](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cake-build/cake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/cake-build/cake](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cake-build/cake)
 
 
 
@@ -43,7 +43,7 @@ Task("Start")
     .Does(() =>
 {
 	Information("---Configure the agent---");
-	
+
     ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -118,7 +118,7 @@ Task("Deploy")
     .Does(() =>
 {
     Information("---Call the agent API on another machine---");
-	
+
     RunRemoteTarget(new RemoteSettings()
 	{
         Username = "Admin",
@@ -142,7 +142,7 @@ Task("Start")
     .Does(() =>
 {
     Information("---Configure the agent---");
-	
+
 	ConfigureAgent(new AgentSettings()
 	{
 		Port = 8888,
@@ -164,7 +164,7 @@ Task("Deploy")
 
 ## Scheduled Tasks
 
-CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consulte their [documentation](https://github.com/fluentscheduler/FluentScheduler) for the fluent interface.
+CakeBoss uses [FluentScheduler](https://github.com/fluentscheduler/FluentScheduler) to enable scheduled tasks, please consult their [documentation](https://github.com/fluentscheduler/FluentScheduler) for the fluent interface.
 
 ```csharp
 Task("Start")
@@ -172,7 +172,7 @@ Task("Start")
     .Does(() =>
 {
     Information("---Add scheduled tasks---");
-	
+
 	//Every two hours
 	ScheduleTask("Timed-Critical-Task")
         .ToRunNow().AndEvery(2).Hours();
@@ -180,7 +180,7 @@ Task("Start")
     //15 minute delay
     ScheduleTask("Timed-Critical-Task")
         .ToRunOnceIn(15).Minutes();
-        
+
     //Every morning
     ScheduleTask("Timed-Critical-Task")
         .ToRunEvery(1).Days().At(8, 30);
@@ -188,7 +188,7 @@ Task("Start")
 
 
     Information("---Configure the agent---");
-	
+
 	ConfigureAgent(new AgentSettings()
 	{
         EnableScheduledTasks = true
@@ -207,7 +207,7 @@ Task("Timed-Critical-Task")
 
 ## Addins
 
-Since CakeBoss is effectively just a different host for the Cake engine you get access to all of its [addins](http://cakebuild.net/addins) in your tasks:
+Since CakeBoss is effectively just a different host for the Cake engine so you get access to all of its [addins](http://cakebuild.net/addins) in your tasks:
 
 * [Cake.AWS.CloudFront](https://github.com/SharpeRAD/Cake.AWS.CloudFront)
 * [Cake.AWS.EC2](https://github.com/SharpeRAD/Cake.AWS.EC2)
@@ -238,4 +238,4 @@ CakeBoss is provided as-is under the MIT license. For more information see [LICE
 
 ## Share the love
 
-If this project helps you in anyway then please :star: the repository, as its good to know your hardwork is appreciated.
+If this project helps you in anyway then please :star: the repository.

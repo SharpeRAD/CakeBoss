@@ -144,10 +144,12 @@
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Nancy\UserIdentity.cs" />
     <Compile Include="Nancy\UserValidator.cs" />
-    <Compile Include="Properties\SolutionInfo.cs" />
     <Compile Include="Registry\HostRoot.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\TaskRegistry.cs" />
+	<Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

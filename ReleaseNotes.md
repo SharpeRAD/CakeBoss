@@ -1,6 +1,9 @@
+### New in 0.1.2 (Released 2016/01/16)
+* Fixed SolutionInfo link
+
 ### New in 0.1.1 (Released 2016/01/07)
 * Add GitHub releases to build
-* Seperate Test / Release cake scripts
+* Separate Test / Release cake scripts
 * Fix log formatting / default locations
 * Exclude TopShelf configuration result from logs
 * Add icon to agent
@@ -22,7 +25,7 @@
 
 ### New in 0.0.5 (Released 2015/11/08)
 * Cake Addin for calling agent
-* Bootstrap using CompositeRoots for improved seperation
+* Bootstrap using CompositeRoots for improved separation
 
 ### New in 0.0.4 (Released 2015/11/06)
 * Added Nancy webservice
