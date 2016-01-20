@@ -54,9 +54,16 @@ namespace CakeBoss.Agent
 
         #region Functions (7)
             //Events
-            public void Start() 
+            public void Start(IDictionary<string, object> arguments) 
             {
-                this.RunTarget(UptimeUtils.IsStartup() ? "Startup" : "Start", true);
+                string target = UptimeUtils.IsStartup() ? "Startup" : "Start";
+
+                if ((arguments != null) && arguments.ContainsKey("target"))
+                {
+                    target = arguments["target"].ToString();
+                }
+
+                this.RunTarget(target, true);
             }
 
             public void Stop() 

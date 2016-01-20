@@ -1,8 +1,10 @@
 ﻿#region Using Statements
     using System.IO;
     using System.Diagnostics;
+    using System.Collections.Generic;
 
     using Topshelf;
+
     using Serilog;
     using Serilog.Events;
 
@@ -39,7 +41,7 @@ namespace CakeBoss.Agent
             Log.Logger = new LoggerConfiguration()
                                 .WriteTo.RollingFile(logFile)
                                 .WriteTo.ColoredConsole()
-                                .MinimumLevel.Is(Debugger.IsAttached ? LogEventLevel.Verbose : LogEventLevel.Information)
+                                .MinimumLevel.Verbose()
                                 .Filter.ByExcluding((LogEvent log) => 
                                 {
                                     return log.MessageTemplate.Text.Contains("Configuration Result:") 
@@ -58,12 +60,14 @@ namespace CakeBoss.Agent
             //TopShelf
             HostFactory.Run(x =>
             {
+                IDictionary<string, object> arguments = x.SelectPlatform();
+
                 //Methods
                 x.Service<IAgentService>(s =>
                 {
                     s.ConstructUsing(name => Program.Container.GetInstance<IAgentService>());
 
-                    s.WhenStarted(ser => ser.Start());
+                    s.WhenStarted(ser => ser.Start(arguments));
                     s.WhenStopped(ser => ser.Stop());
                     s.WhenShutdown(ser => ser.Shutdown());
                 });

@@ -1,3 +1,8 @@
+### New in 0.1.3 (Released 2016/01/20)
+* Add Linux support
+* Select target from command line argument
+* Verbose Serilogs
+
 ### New in 0.1.2 (Released 2016/01/16)
 * Fixed SolutionInfo link
 * Changed Cake.CakeBoss alias to pass the target in as its own parameter

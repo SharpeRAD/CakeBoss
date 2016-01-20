@@ -1,5 +1,6 @@
 ﻿#region Using Statements
     using System;
+    using System.Collections.Generic;
 #endregion
 
 
@@ -18,7 +19,7 @@ namespace CakeBoss.Agent
 
         #region Functions (5)
             //Events
-            void Start();
+            void Start(IDictionary<string, object> arguments);
 
             void Stop();
 
