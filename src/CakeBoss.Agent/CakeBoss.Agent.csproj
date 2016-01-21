@@ -206,7 +206,9 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(SolutionDir)..\script\Test.cake" "$(TargetDir)CakeBoss.Agent.cake"
 
+
 mkdir $(TargetDir)Tools
+
 
 copy /Y "$(SolutionDir)..\tools\nuget.exe" "$(TargetDir)tools\nuget.exe"</PostBuildEvent>
   </PropertyGroup>

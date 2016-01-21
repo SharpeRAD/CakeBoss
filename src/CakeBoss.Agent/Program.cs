@@ -60,7 +60,11 @@ namespace CakeBoss.Agent
             //TopShelf
             HostFactory.Run(x =>
             {
-                IDictionary<string, object> arguments = x.SelectPlatform();
+                //CommandLine Parameters
+                IDictionary<string, object> arguments = x.SelectPlatform(p => p
+                        .AddStringParameter("target"));
+
+
 
                 //Methods
                 x.Service<IAgentService>(s =>

@@ -1,3 +1,9 @@
+### New in 0.1.4 (Released 2016/01/21)
+* Simplify build script file copying
+* Add extra checks for nuget.exe
+* Fix bug in target command line
+* Add deploy.bat as an example use of target
+
 ### New in 0.1.3 (Released 2016/01/20)
 * Add Linux support
 * Select target from command line argument

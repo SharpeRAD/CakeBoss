@@ -59,9 +59,10 @@ var zipPackage = buildResultDir + "/CakeBoss-v" + semVersion + ".zip";
 
 Setup(() =>
 {
-	//Executed BEFORE the first task.
+	// Executed BEFORE the first task.
 	Information("Building version {0} of {1}.", semVersion, appName);
 
+	// Install Tools
 	NuGetInstall("xunit.runner.console", new NuGetInstallSettings
 	{
 		ExcludeVersion  = true,
@@ -73,6 +74,13 @@ Setup(() =>
 		ExcludeVersion  = true,
 		OutputDirectory = tools
     });
+
+	// Install local nuget for VS copy task
+	if (!DirectoryExists("./tools"))
+	{
+		CreateDirectory("./tools");
+		CopyFile(EnvironmentVariable("NUGET_EXE"), "./tools/nuget.exe");
+	}
 });
 
 Teardown(() =>
@@ -164,6 +172,8 @@ Task("Run-Unit-Tests")
 {
     XUnit2("./src/**/bin/" + configuration + "/*.Tests.dll", new XUnit2Settings
 	{
+		ToolPath = tools + "xunit.runner.console/tools/xunit.console.exe",
+		
         OutputDirectory = testResultsDir,
         XmlReportV1 = true
     });
@@ -182,51 +192,15 @@ Task("Copy-Files")
     .Does(() =>
 {
     //Agent
-    CopyFileToDirectory(buildAgentDir + "/Cake.Core.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Cake.Common.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Cake.Host.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Cake.CakeBoss.dll", binAgentDir);
+    CopyFiles(buildAgentDir + "/*.dll", binAgentDir);
 
-    CopyFileToDirectory(buildAgentDir + "/CakeBoss.Host.dll", binAgentDir);
     CopyFileToDirectory(buildAgentDir + "/CakeBoss.Agent.exe", binAgentDir);
     CopyFileToDirectory(buildAgentDir + "/CakeBoss.Agent.exe.config", binAgentDir);
 
-    CopyFileToDirectory(buildAgentDir + "/FluentScheduler.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/LightInject.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/LightInject.Annotation.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.CodeAnalysis.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.CodeAnalysis.Desktop.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.CodeAnalysis.Scripting.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.CodeAnalysis.Scripting.CSharp.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.CodeAnalysis.Scripting.VisualBasic.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Microsoft.Web.XmlTransform.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Mono.CSharp.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Nancy.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Nancy.Authentication.Basic.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Nancy.Hosting.Self.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Nancy.Serialization.JsonNet.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Newtonsoft.Json.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/NuGet.Core.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Roslyn.Compilers.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Roslyn.Compilers.CSharp.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Serilog.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Serilog.FullNetFx.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/Topshelf.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/Topshelf.Serilog.dll", binAgentDir);
-
-    CopyFileToDirectory(buildAgentDir + "/System.Collections.Immutable.dll", binAgentDir);
-    CopyFileToDirectory(buildAgentDir + "/System.Reflection.Metadata.dll", binAgentDir);
-
     CopyFileToDirectory("./script/Install.bat", binAgentDir);
     CopyFileToDirectory("./script/Uninstall.bat", binAgentDir);
+    CopyFileToDirectory("./script/Deploy.bat", binAgentDir);
+
     CopyFile("./script/Release.cake", binAgentDir + "/CakeBoss.Agent.cake");
 
     CreateDirectory(binAgentDir + "/Tools/");
