@@ -8,12 +8,11 @@
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Core.IO.NuGet;
-    using Cake.Core.IO.NuGet.Parsing;
     using Cake.Core.Scripting;
     using Cake.Core.Scripting.Analysis;
-
+    using Cake.Core.Packaging;
+    using Cake.NuGet;
     using Cake.Host.Diagnostics;
-    using Cake.Host.NuGet;
     using Cake.Host.Scripting;
     using Cake.Host.Scripting.Mono;
     using Cake.Host.Scripting.Roslyn;
@@ -51,7 +50,6 @@ namespace CakeBoss.Host
             container.Register<IScriptConventions, ScriptConventions>(new PerContainerLifetime());
 
             container.Register<INuGetToolResolver, NuGetToolResolver>(new PerContainerLifetime());
-            container.Register<INuGetPackageInstaller, NuGetPackageInstaller>(new PerContainerLifetime());
 
             container.Register<IRegistry, WindowsRegistry>(new PerContainerLifetime());
             container.Register<ICakeContext, CakeContext>(new PerContainerLifetime());
@@ -63,9 +61,13 @@ namespace CakeBoss.Host
             container.Register<IFrameworkNameParser, NuGetVersionUtilityAdapter>(new PerContainerLifetime());
 
             container.Register<INuGetPackageAssembliesLocator, NuGetPackageAssembliesLocator>(new PerContainerLifetime());
-            container.Register<IPackageReferenceBundler, PackageReferenceBundler>(new PerContainerLifetime());
+            container.Register<INuGetPackageReferenceBundler, NuGetPackageReferenceBundler>(new PerContainerLifetime());
             container.Register<INuGetAssemblyCompatibilityFilter, NuGetAssemblyCompatibilityFilter>(new PerContainerLifetime());
-            container.Register<IAssemblyFilePathFrameworkNameParser, AssemblyFilePathFrameworkNameParser>(new PerContainerLifetime());
+            container.Register<IAssemblyFrameworkNameParser, AssemblyFrameworkNameParser>(new PerContainerLifetime());
+
+            // URI resource support.
+            container.Register<IPackageInstaller, NuGetPackageInstaller>(new PerContainerLifetime());
+            container.Register<INuGetPackageContentResolver, NuGetPackageContentResolver>(new PerContainerLifetime());
 
 
 

@@ -109,7 +109,7 @@ namespace CakeBoss.Agent
 
 
 
-        private static IServiceContainer CreateContainer()
+        public static IServiceContainer CreateContainer()
         {
             var container = new ServiceContainer();
 

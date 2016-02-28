@@ -28,7 +28,7 @@ Task("Start")
 	{
 		Port = 8888,
 
-        EnableTerminationCheck = false,
+        EnableTerminationCheck = true,
 		EnableAPI = true,
         EnableScheduledTasks = true
 	}.AddUser("Admin", "Password1"));
@@ -50,10 +50,10 @@ Task("Stop")
     Information("---Stop---");
 });
 
-Task("Shutdown")
+Task("Update")
     .Does(() =>
 {
-    Information("---Shutdown---");
+    Information("---Update Config---");
 });
 
 
@@ -78,6 +78,7 @@ Task("Timed")
     .Does(() =>
 {
     Information("---Timed Task Call---");
+    UpdateConfig("../../../../script/Release.cake");
 });
 
 

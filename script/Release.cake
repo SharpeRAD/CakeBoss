@@ -76,6 +76,12 @@ Task("Deploy")
     Information("---Example Deployment---");
 });
 
+Task("Update")
+    .Does(() =>
+{
+    Information("---Update Config---");
+});
+
 
 
 

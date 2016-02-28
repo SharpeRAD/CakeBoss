@@ -2,9 +2,12 @@
     using System;
 
     using Cake.Core;
+    using Cake.Core.IO;
     using Cake.Core.Annotations;
     using Cake.Core.Diagnostics;
+    using Cake.Common.IO;
 
+    using LightInject;
     using Nancy.Hosting.Self;
 
     using CakeBoss.Host;
@@ -17,6 +20,11 @@ namespace CakeBoss.Agent
     [CakeAliasCategory("CakeBoss")]
     public static class AgentAliases
     {
+        /// <summary>
+        /// Configures the agent using the  specified information.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">The agent settings.</param>
         [CakeMethodAlias]
         [CakeAliasCategory("Agent")]
         public static void ConfigureAgent(this ICakeContext context, AgentSettings settings)
@@ -28,56 +36,66 @@ namespace CakeBoss.Agent
 
 
 
-            //Host
+            //Configure
             context.ConfigureHost(settings);
 
-            //Termination
+
+
+            //Start
             if (settings.EnableTerminationCheck)
             {
-                context.GetContainer().GetInstance<ITerminationService>().Enabled = true;
-
-                context.Log.Information("Starting agent termination service.");
+                context.StartTerminationCheck();
             }
 
-            //API
             if (settings.EnableAPI)
             {
-                if (Program.Host == null)
-                {
-                    HostSettings hostSettings = context.GetContainer().GetInstance<HostSettings>();
-
-                    if (!String.IsNullOrEmpty(hostSettings.Url))
-                    {
-                        Program.Host = new NancyHost(new Uri(hostSettings.Url), new ServiceBootstrapper(), new HostConfiguration()
-                        {
-                            EnableClientCertificates = true,
-
-                            UrlReservations = new UrlReservations()
-                            {
-                                CreateAutomatically = true
-                            }
-                        });
-
-                        Program.Host.Start();
-
-                        context.Log.Information("Starting agent api on url '{0}'.", hostSettings.Url);
-                    }
-                    else
-                    {
-                        context.Log.Error("Invalid host url.");
-                    }
-                }
-                else
-                {
-                    context.Log.Error("Agent api has already been configured.");
-                }
+                context.StartApi();
             }
 
-            //Scheduled Tasks
             if (settings.EnableScheduledTasks)
             {
                 context.StartSchedules();
             }
+        }
+
+
+
+        /// <summary>
+        /// reloads the agent from the existing config file
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="path">The path to the new config file.</param>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Agent")]
+        public static void ReconfigureAgent(this ICakeContext context, FilePath path)
+        {
+            // Update config file
+            context.CopyFile(path, FilePath.FromString("./CakeBoss.Agent.cake"));
+            context.Log.Information("Config file updated.");
+
+            context.RestartAgent();
+        }
+
+        /// <summary>r
+        /// Reloads the agent from the existing config file
+        /// </summary>
+        /// <param name="context">The context.</param>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Agent")]
+        public static void RestartAgent(this ICakeContext context)
+        {
+            // Stop services
+            context.StartTerminationCheck();
+            context.StopSchedules();
+            context.StopApi();
+
+            // Clear all register references
+            Program.Container = Program.CreateContainer();
+
+            // Restart the agent
+            IAgentService service = context.GetContainer().GetInstance<IAgentService>();
+            service.RunTarget("Start", true);
+            context.Log.Information("Cake engine reloaded.");
         }
     }
 }

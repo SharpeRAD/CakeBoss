@@ -101,6 +101,31 @@ namespace CakeBoss.Host
 
 
             /// <summary>
+            /// Writes the text representation of the specified array of objects to the
+            /// console output using the specified format information.
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An array of objects to write using format.</param>
+            public void WriteError(string format, params object[] arg)
+            {
+                this.CreateOutput(String.Format(format, arg) + Environment.NewLine, ConsoleColor.Red);
+            }
+
+            /// <summary>
+            /// Writes the text representation of the specified array of objects, followed
+            /// by the current line terminator, to the console output using the specified
+            /// format information.
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An array of objects to write using format.</param>
+            public void WriteErrorLine(string format, params object[] arg)
+            {
+                this.CreateOutput(String.Format(format, arg) + Environment.NewLine, this.ForegroundColor);
+            }
+
+
+
+            /// <summary>
             /// Sets the foreground and background console colors to their defaults.
             /// </summary>
             public void ResetColor()

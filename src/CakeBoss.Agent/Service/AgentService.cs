@@ -58,7 +58,7 @@ namespace CakeBoss.Agent
             {
                 string target = UptimeUtils.IsStartup() ? "Startup" : "Start";
 
-                if ((arguments != null) && arguments.ContainsKey("target"))
+                if ((arguments != null) && arguments.ContainsKey("target") && !String.IsNullOrWhiteSpace(arguments["target"].ToString()))
                 {
                     target = arguments["target"].ToString();
                 }

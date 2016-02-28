@@ -1,7 +1,14 @@
+### New in 0.1.5 (Released 2016/01/29)
+* Update cake references
+* Seperate Termination and Api aliases from main config alias
+* Add "StopSchedules" alias
+* Add "RestartAgent" and "ReconfigureAgent" aliases
+* Check for blank command line target argument
+
 ### New in 0.1.4 (Released 2016/01/21)
 * Simplify build script file copying
 * Add extra checks for nuget.exe
-* Fix bug in target command line
+* Fix bug in target commaned line
 * Add deploy.bat as an example use of target
 
 ### New in 0.1.3 (Released 2016/01/20)
