@@ -13,7 +13,7 @@
 
 
 
-namespace CakeBoss.Tests
+namespace CakeBoss.Agent.Tests
 {
     public class UnitTestBootstrapper : LightInjectNancyBootstrapper
     {

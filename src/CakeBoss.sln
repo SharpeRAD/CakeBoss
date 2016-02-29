@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBoss.Host", "CakeBoss.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBoss.Agent", "CakeBoss.Agent\CakeBoss.Agent.csproj", "{14449D2A-6115-476B-8F8A-78A1BF726299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBoss.Tests", "CakeBoss.Agent.Tests\CakeBoss.Tests.csproj", "{86E04045-FE0D-4EB4-85C1-8B7792B4C4E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBoss.Agent.Tests", "CakeBoss.Agent.Tests\CakeBoss.Agent.Tests.csproj", "{86E04045-FE0D-4EB4-85C1-8B7792B4C4E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Host", "Cake.Host\Cake.Host.csproj", "{C29AF03C-36E0-4161-B28F-B114C2555E7B}"
 EndProject

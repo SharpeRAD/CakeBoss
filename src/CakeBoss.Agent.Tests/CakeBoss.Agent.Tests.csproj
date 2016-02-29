@@ -7,8 +7,8 @@
     <ProjectGuid>{86E04045-FE0D-4EB4-85C1-8B7792B4C4E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CakeBoss.Tests</RootNamespace>
-    <AssemblyName>CakeBoss.Tests</AssemblyName>
+    <RootNamespace>CakeBoss.Agent.Tests</RootNamespace>
+    <AssemblyName>CakeBoss.Agent.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

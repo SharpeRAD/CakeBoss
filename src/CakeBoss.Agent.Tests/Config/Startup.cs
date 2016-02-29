@@ -10,7 +10,7 @@
 
 
 
-namespace CakeBoss.Tests
+namespace CakeBoss.Agent.Tests
 {
     public static class Startup
     {
