@@ -1,10 +1,10 @@
 #addin "Cake.Slack"
+#tool "xunit.runner.console"
+#tool "gitreleasemanager"
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
-
-var tools = Argument("tools", "./tools");
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -57,24 +57,11 @@ var zipPackage = buildResultDir + "/CakeBoss-v" + semVersion + ".zip";
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-Setup(() =>
+Setup(context =>
 {
 	// Executed BEFORE the first task.
 	Information("Building version {0} of {1}.", semVersion, appName);
-	Information("Tools dir: {0}.", tools);
-	
-	// Install Tools
-	NuGetInstall("xunit.runner.console", new NuGetInstallSettings
-	{
-		ExcludeVersion  = true,
-		OutputDirectory = tools
-    });
-
-	NuGetInstall("gitreleasemanager", new NuGetInstallSettings
-	{
-		ExcludeVersion  = true,
-		OutputDirectory = tools
-    });
+	Information("Tools dir: {0}.", EnvironmentVariable("CAKE_PATHS_TOOLS"));
 
 	// Install local nuget for VS copy task
 	if (!DirectoryExists("./tools"))
@@ -84,7 +71,7 @@ Setup(() =>
 	}
 });
 
-Teardown(() =>
+Teardown(context =>
 {
 	// Executed AFTER the last task.
 	Information("Finished building version {0} of {1}.", semVersion, appName);
@@ -121,7 +108,7 @@ Task("Restore-Nuget-Packages")
     foreach(var solution in solutions)
     {
         Information("Restoring {0}", solution);
-        
+
         NuGetRestore(solution);
     }
 });
@@ -173,8 +160,6 @@ Task("Run-Unit-Tests")
 {
     XUnit2("./src/**/bin/" + configuration + "/*.Tests.dll", new XUnit2Settings
 	{
-		ToolPath = tools + "/xunit.runner.console/tools/xunit.console.exe",
-		
         OutputDirectory = testResultsDir,
         XmlReportV1 = true
     });
