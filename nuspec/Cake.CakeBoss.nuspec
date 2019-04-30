@@ -10,7 +10,7 @@
       <summary>CakeBoss addon for cake build.</summary>
       <licenseUrl>https://github.com/SharpeRAD/CakeBoss/LICENSE</licenseUrl>
       <projectUrl>https://github.com/SharpeRAD/CakeBoss</projectUrl>
-      <iconUrl>https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-medium.png</iconUrl>
+      <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Copyright (c) Phillip Sharpe 2015</copyright>
       <releaseNotes>Initial Release</releaseNotes>
